@@ -7,18 +7,23 @@ import "./row.css";
 function Rows({ title, fetchUrl, isLargeRow }) {
   const [movie, setMovie] = useState([]);
   const [trailerUrl, setTrailerUrl] = useState("");
-  const base_Url = "https://image.tmdb.org/t/p/original";
+  const base_Url = "https://image.tmdb.org/t/p/original"; //constant holding the base URL for image resources from The Movie Database (TMDb) API. When displaying movie posters or images from the TMDb API, you might append an image path to this base URL to construct the full image URL.
+  // For example, you could append an image path like "/someImagePath.jpg" to form the complete URL: https://image.tmdb.org/t/p/original/someImagePath.jpg.
+
+  //React useEffect hook combined with an asynchronous operation (fetching data from an API) using axios.
   useEffect(() => {
+    //The useEffect hook will trigger a request to the URL stored in fetchUrl, using axios to make the GET request.
     (async () => {
       try {
-        const request = await axios.get(fetchUrl);
+        const request = await axios.get(fetchUrl); //This line uses the axios library to make an HTTP GET request to the URL stored in the fetchUrl variable.
         console.log(request);
-        setMovie(request.data.results);
+        setMovie(request.data.results); //update the state with the results from the API request.
       } catch (error) {
+        //This block catches any errors that might occur during the API request (for example, if the network fails or the API is unreachable) and logs them to the console.
         console.log(error);
       }
     })();
-  }, [fetchUrl]);
+  }, [fetchUrl]); //dependency array [fetchUrl]. This means the useEffect hook will run whenever fetchUrl changes.
 
   const handleClick = (movie) => {
     if (trailerUrl) {
@@ -69,7 +74,7 @@ function Rows({ title, fetchUrl, isLargeRow }) {
 
         <div style={{ padding: "10px" }}>
           {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
-          {/* //the first curley brace is javascript, the second curley brace is we are writing another function in css styes, if trailerUrl is there, play the video on youtube */}
+          {/* //line 71,the first curley brace is javascript, the second curley brace is we are writing another function in css style,line 72 if trailerUrl is there, play the video on youtube */}
         </div>
       </div>
     </>
@@ -78,48 +83,3 @@ function Rows({ title, fetchUrl, isLargeRow }) {
 
 export default Rows;
 
-// import React from 'react'
-// import { useEffect, useState } from "react";
-// import "./row.css";
-// import axios from "../../../utils/axios"
-// import movieTrailer from 'movie-trailer';
-// import YouTube from 'react-youtube';
-
-// const Row = ({ title, fetchUrl, isLargeRow }) => {
-// const [movies, setMovies] = useState([]); //This line creates a piece of state called movies, which will hold the list of movies fetched from the API. Initially, it's set to an empty array []. The setMovies function is used to update the state later on.
-// const base_url = "https://image.tmdb.org/t/p/original"; //This is a constant URL that will be used to construct the full image path for displaying movie posters
-
-//   useEffect(() => {
-//     (async () => {
-//       try {
-//         console.log(fetchUrl);
-//         const request = await axios.get(fetchUrl);
-//         console.log(request);
-//         setMovies(request.data.results); //result is 20 arrey data.
-//       } catch (error) {
-//         console.log("error", error);
-//       }
-//     })();
-//   }, [fetchUrl]);
-
-//   return (
-//     <div className="row">
-//       <h1>{title}</h1>
-
-//       <div className="row_posters">
-//         {movies?.map((movie, i) => (
-//           <img
-//             key={i}
-//             src={`${base_url}${
-//               isLargeRow ? movie.poster_path : movie.backdrop_path
-//             }`}
-//             alt={movie.name}
-//             className={`row_poster ${isLargeRow && "row_posterLarge"}`}
-//           />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Row;

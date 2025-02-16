@@ -6,3 +6,7 @@ const instance = axios.create({
 });
 
 export default instance;
+
+
+
+//axios.js....we use js for data
