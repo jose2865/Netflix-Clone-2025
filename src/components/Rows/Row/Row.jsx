@@ -22,7 +22,7 @@ function Rows({ title, fetchUrl, isLargeRow }) {
         //This block catches any errors that might occur during the API request (for example, if the network fails or the API is unreachable) and logs them to the console.
         console.log(error);
       }
-    })();
+    })(); //the bracket works when the function is called
   }, [fetchUrl]); //dependency array [fetchUrl]. This means the useEffect hook will run whenever fetchUrl changes.
 
   const handleClick = (movie) => {
@@ -59,6 +59,7 @@ function Rows({ title, fetchUrl, isLargeRow }) {
         <div className="row__posters">
           {movie?.map((movie, index) => (
             <img
+              onError={(e) => (e.target.style.display = "none")}
               onClick={
                 () => handleClick(movie) //handle the movie
               }
